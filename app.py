@@ -12,14 +12,14 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 def index():
 	return render_template("index.html")
 
-@app.route('/hello',methods=['POST'])
+@app.route('/upload',methods=['POST'])
 def hello():
     data_url = request.values['imageBase64']
     data_url= data_url[22:]
+    name = request.values['username']
     im = Image.open(BytesIO(base64.b64decode(data_url)))
     print(type(im))
-    #imshow(np.asarray(im))
-    im.save('image.jpeg')
+    im.save(name + '.jpg')
     return ''
 
 if(__name__ == '__main__'):
