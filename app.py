@@ -10,7 +10,7 @@ app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return render_template("layout.html")
 
 @app.route('/upload',methods=['POST'])
 def hello():
