@@ -57,6 +57,10 @@ html{
     display: none;
 }
 
+.text{
+  text-align: center;
+}
+
 .bt{
 	text-align: center;
 }
@@ -81,9 +85,12 @@ html{
     <!-- Hidden canvas element. Used for taking snapshot of video. -->
     <canvas></canvas>
 </div>
-
+<div class = "text">
+  <input type ="text" id="name" name="Name" placeholder="Enter Your Name">
+</div>
 <div class="bt">
 	<input type="button" id="capture" value="Take Snaphot">
+	<input type="button" id="resume" value="Resume">
 </div>
 
 <script type="text/javascript">
@@ -95,7 +102,7 @@ html{
 
     // The getUserMedia interface is used for handling camera input.
     // Some browsers need a prefix so here we're covering all the options
-    
+
 
     if (navigator.mediaDevices) {
       // access the web cam
@@ -121,8 +128,9 @@ html{
         e.preventDefault();
 
         var snap = takeSnapshot();
+        var name = document.getElementById("name").value
 
-        // Show image. 
+        // Show image.
 
 
 
@@ -131,9 +139,10 @@ html{
 
         $.ajax({
           type: "POST",
-          url: "/hello",
+          url: "/upload",
           data:{
-            imageBase64: snap
+            imageBase64: snap,
+            username: name
           }
         }).done(function() {
           console.log('sent');
@@ -141,13 +150,19 @@ html{
 
     });
 
+  resume.addEventListener("click", function(e){
+
+        e.preventDefault();
+        video.play();
+
+    });
 
 
 
-  
+
 
     function takeSnapshot(){
-        // Here we're using a trick that involves a hidden canvas element.  
+        // Here we're using a trick that involves a hidden canvas element.
 
         var hidden_canvas = document.querySelector('canvas'),
             context = hidden_canvas.getContext('2d');
@@ -170,7 +185,7 @@ html{
     }
 
 
-   
+
 
 });
 
